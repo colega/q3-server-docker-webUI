@@ -2,7 +2,7 @@ version: "3"
 
 services:
   quake3:
-    build: .
+    image: colega/q3-server
     restart: always
     ports:
      - 27960:27960/udp
@@ -13,12 +13,17 @@ services:
   ng-quake3-be:
     environment:
        - Q3SERV_HOST:quake3
-       
+    image: colega/q3-server-be
     build: ./ng-quake3-be/
     restart: always
 
   ng-quake3-fe:
     restart: always
-    build: ./ng-quake3-fe/
+    image: colega/q3-server-fe
     ports:
      - 8080:8080
+
+networks:
+  default:
+    external:
+      name: local-network
